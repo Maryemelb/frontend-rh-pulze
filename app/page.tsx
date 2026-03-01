@@ -7,12 +7,7 @@ export default function FixedLandingPage() {
   const [isPredicted, setIsPredicted] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const predictSalary = () => {
-    const salaries = [92000, 95000, 98500, 102000];
-    const randomSalary = salaries[Math.floor(Math.random() * salaries.length)];
-    setSalary(`$${randomSalary.toLocaleString()}`);
-    setIsPredicted(true);
-  };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-rose-50 to-indigo-100 text-slate-900">
@@ -21,17 +16,15 @@ export default function FixedLandingPage() {
   <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="flex items-center justify-between h-16 sm:h-20">
       {/* Logo - Always visible */}
-      <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
-        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-rose-400 to-orange-500 rounded-2xl flex items-center justify-center text-xl shadow-lg flex-shrink-0">
-          🧠
-        </div>
-        <div className="hidden sm:block">
-          <h1 className="text-xl sm:text-2xl font-bold text-rose-600 tracking-tight">
-            BrainHunt
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium -mt-1">Creative RH Rebels</p>
-        </div>
-      </div>
+        <div className="flex items-center gap-2 mt-7 mb-8">
+            <div className="w-8 h-8 bg-pink-600 rounded-lg flex items-center justify-center">
+              <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <circle cx="10" cy="10" r="3" />
+                <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z" />
+              </svg>
+            </div>
+            <span className="text-gray-800 font-semibold text-base">dotwork</span>
+          </div>
 
       {/* Desktop Nav + Login Button - Hidden on mobile */}
       <div className="hidden md:flex items-center space-x-8">
@@ -117,13 +110,13 @@ export default function FixedLandingPage() {
                   💰 What's this genius worth?
                 </h3>
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
-                  <button
-                    onClick={predictSalary}
+                  <a
+                    href= "/predict-salary"
                     disabled={isPredicted}
-                    className="flex-1 py-3 sm:py-4 px-6 sm:px-8 bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
+                    className="flex-1 py-3 sm:py-4 px-6 sm:px-8 bg-gradient-to-r from-pink-400 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                   >
-                    {isPredicted ? 'Predicted!' : 'Predict Salary'}
-                  </button>
+                    Predict Salary
+                  </a>
                   <div className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent min-w-[140px] sm:min-w-[160px] text-center">
                     {salary || '???k'}
                   </div>
@@ -169,9 +162,9 @@ export default function FixedLandingPage() {
                 <br className="hidden md:block" /> Don't make Sarah cry.
               </p>
               
-              <button className="w-full sm:w-auto px-8 sm:px-12 py-5 sm:py-6 bg-white text-rose-600 text-lg sm:text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all border-4 border-white/20">
+              <a href="/predict-salary" className="w-full sm:w-auto px-8 sm:px-12 py-5 sm:py-6 bg-white text-rose-600 text-lg sm:text-xl font-bold rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 transition-all border-4 border-white/20">
                 GRAB YOUR BRAINS NOW!
-              </button>
+              </a>
               
               <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t-2 border-white/30">
                 <p className="text-base sm:text-lg opacity-90">⚡ Instant Access • AI Magic • No BS</p>
@@ -195,10 +188,11 @@ export default function FixedLandingPage() {
           
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {[
-              { icon: '🤖', name: 'AI Brain Scanner', desc: 'Finds hidden geniuses' },
-              { icon: '⚛️', name: 'Next.js 15', desc: 'Lightning fast' },
-              { icon: '💨', name: 'TailwindCSS', desc: 'Zero bloat styling' },
-              { icon: '🚀', name: 'Vercel', desc: 'Deploy in 0.1s' }
+              { icon: '🤖', name: 'AI Brain', desc: 'Finds hidden geniuses' },
+              { icon: '⚛️', name: 'Next.js', desc: 'Lightning fast' },
+              { icon: '⚛️', name: 'FastApi', desc: 'Lightning fast' },
+              { icon: '⚛️', name: 'TailwindCSS', desc: 'Zero bloat styling' },
+              { icon: '🚀', name: 'Docker', desc: 'Deploy in 0.1s' }
             ].map(({ icon, name, desc }) => (
               <div key={name} className="p-6 sm:p-8 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 shadow-xl hover:shadow-2xl transition-all text-center">
                 <div className="text-3xl sm:text-4xl mb-3 mx-auto">{icon}</div>
