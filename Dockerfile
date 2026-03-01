@@ -9,4 +9,4 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "run", "dev"]
+CMD ["npx", "next", "dev", "-H", "0.0.0.0"]

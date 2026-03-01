@@ -2,12 +2,14 @@
 'use client';
 import { useRouter } from "next/navigation"
 import { useState } from "react";
+import { getBackendURL } from "../utils/api";
 
 export default function LoginForm({ is_login }) {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
 
-
+  const baseURL =getBackendURL()
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
@@ -16,7 +18,7 @@ export default function LoginForm({ is_login }) {
     try {
 
       let response = await fetch(
-        ` ${process.env.NEXT_PUBLIC_BACKEND_API}/Auth/login`, {
+        `${baseURL}/Auth/login`, {
         method: 'POST',
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -34,7 +36,7 @@ export default function LoginForm({ is_login }) {
 
       const data = await response.json()
       console.log(data)
-      router.push('/predict')
+      router.push('/predict-salary')
 
     }
     catch (error) {
@@ -46,7 +48,7 @@ export default function LoginForm({ is_login }) {
         try {
 
             let response = await fetch(
-                `${process.env.NEXT_PUBLIC_BACKEND_API}/Auth/register`, {
+                `${baseURL}/Auth/register`, {
                 method: 'POST',
                 headers: { "Content-Type": "application/json" },
                 credentials: "include",
@@ -80,7 +82,7 @@ export default function LoginForm({ is_login }) {
 
           {/* Logo */}
           <div className="flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-8 h-8 bg-pink-600 rounded-lg flex items-center justify-center">
               <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <circle cx="10" cy="10" r="3" />
                 <path d="M10 2a8 8 0 100 16A8 8 0 0010 2zm0 2a6 6 0 110 12A6 6 0 0110 4z" />
@@ -157,7 +159,7 @@ export default function LoginForm({ is_login }) {
               <label className="flex items-center gap-2 cursor-pointer select-none">
                 <div
                   onClick={() => setRememberMe(!rememberMe)}
-                  className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 border transition-all ${rememberMe ? "bg-blue-600 border-blue-600" : "bg-white border-gray-300"
+                  className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 border transition-all ${rememberMe ? "bg-pink-600 border-pink-600" : "bg-white border-gray-300"
                     }`}
                 >
                   {rememberMe && (
@@ -168,28 +170,32 @@ export default function LoginForm({ is_login }) {
                 </div>
                 <span className="text-gray-600 text-sm">Remember me</span>
               </label>
-              <a href="#" className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors">
-                Forgot Password?
-              </a>
+             
             </div>
 
             {/* Login Button */}
-            <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold py-3 rounded-xl transition-colors text-sm shadow-md shadow-blue-200">
+           {is_login && <button type="submit" className="w-full bg-pink-400 hover:bg-pink-400 active:bg-pink-400 text-white font-semibold py-3 rounded-xl transition-colors text-sm shadow-md shadow-pink-200">
               Log in
-            </button>
+            </button>}
+            {! is_login && <button type="submit" className="w-full bg-pink-400 hover:bg-pink-400 active:bg-pink-400 text-white font-semibold py-3 rounded-xl transition-colors text-sm shadow-md shadow-pink-200">
+              Sign up
+            </button>}
           </form>
           {/* Sign up */}
           <p className="text-center text-gray-500 text-sm mt-5">
             Don't have an account?{" "}
-            <a href="#" className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+           {is_login && <a href="/signup" className="text-pink-600 hover:text-pink-700 font-medium transition-colors">
               Create an account
-            </a>
+            </a>}
+             {!is_login && <a href="/login" className="text-pink-600 hover:text-pink-700 font-medium transition-colors">
+              login
+            </a>}
           </p>
 
 
         </div>
         {/* ── RIGHT: Blue Decorative Panel ── */}
-        <div className="hidden lg:flex flex-col items-center justify-center flex-1 bg-blue-600 relative overflow-hidden p-10">
+        <div className="hidden lg:flex flex-col items-center justify-center flex-1 bg-pink-400 relative overflow-hidden p-10">
 
           {/* Concentric circle background */}
           <div className="absolute w-[500px] h-[500px] rounded-full border border-blue-500/30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
@@ -225,7 +231,7 @@ export default function LoginForm({ is_login }) {
             {/* Center hub */}
             <div className="absolute" style={{ left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
               <div className="w-16 h-16 rounded-full bg-blue-500 border-2 border-blue-300/50 flex items-center justify-center shadow-2xl">
-                <div className="w-9 h-9 bg-blue-700 rounded-xl flex items-center justify-center">
+                <div className="w-9 h-9 bg-pink-700 rounded-xl flex items-center justify-center">
                   <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12zm0-9a1 1 0 011 1v2h2a1 1 0 110 2h-2v2a1 1 0 11-2 0v-2H7a1 1 0 110-2h2V8a1 1 0 011-1z" clipRule="evenodd" />
                   </svg>
@@ -274,8 +280,9 @@ export default function LoginForm({ is_login }) {
 
           {/* Bottom text */}
           <div className="relative z-10 text-center">
-            <h2 className="text-white text-xl font-bold mb-1">Connect with every application.</h2>
-            <p className="text-blue-100/80 text-sm">Everything you need in an easily customizable dashboard.</p>
+            <h2 className="text-white text-xl font-bold mb-1">AI-Powered Salary Prediction Platform.</h2>
+            <p className="text-pink-100/80 text-sm">Our AI analyzes job data to predict accurate salary ranges automatically.
+Manage everything from one powerful and customizable dashboard.</p>
             <div className="flex items-center justify-center gap-1.5 mt-5">
               <div className="w-2 h-2 rounded-full bg-white" />
               <div className="w-2 h-2 rounded-full bg-blue-400/50" />

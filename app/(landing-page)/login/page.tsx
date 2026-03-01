@@ -7,7 +7,6 @@ export default function Login() {
 
 return(
     <div>
-        login
         <LoginForm is_login={is_login}></LoginForm>
     </div>
 )
